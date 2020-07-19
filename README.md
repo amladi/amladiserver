@@ -7,4 +7,4 @@ Do you know how much know of something? think about it.
 [![issues(scoped)](https://img.shields.io/github/issues/amladiorg/amladiserver)](https://github.com/amladiorg/amladiserver/issues)
 [![forks(scoped)](https://img.shields.io/github/forks/amladiorg/amladiserver)](https://github.com/amladiorg/amladiserver)
 [![stars(scoped)](https://img.shields.io/github/stars/amladiorg/amladiserver)](https://github.com/amladiorg/amladiserver)
-[![license(scoped)](https://img.shields.io/badge/license-MIT-blue)](https://github.com/amladiorg/amladiserver)
+
