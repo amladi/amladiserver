@@ -1,0 +1,21 @@
+{
+  "name": "amladiserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "amladi.org",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amladiorg/amladiserver.git"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "jest": "^26.1.0"
+  }
+}
