@@ -1,19 +1,21 @@
 {
   "name": "amladiserver",
   "version": "1.0.0",
-  "description": "",
+  "description": "Brain of amladi 🧠",
   "main": "app.js",
   "scripts": {
     "test": "jest"
   },
-  "author": "amladi.org",
+  "author": "www.amladi.co",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/amladiorg/amladiserver.git"
+    "url": "https://github.com/amladi/amladiserver.git"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^8.3.0",
+    "pg-hstore": "^2.3.3"
   },
   "devDependencies": {
     "jest": "^26.1.0"
