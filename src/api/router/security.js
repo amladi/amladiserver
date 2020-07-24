@@ -1,6 +1,6 @@
 // created by Esteban Hernandez at 20200721 23:23.
 const router = require("express").Router();
-const login = require("./../core/security/login.js");
+const Login = require("./../core/security/login.js");
 
 router.post("/login", async function (req, res) {
   try {

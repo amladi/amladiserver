@@ -6,5 +6,10 @@ module.exports = class dtoLogin {
     this.sequelize = dataConnection.getSequelize();
   }
 
-  async returnUser(user, pass) {}
+  async returnUser(user, pass) {
+    return {
+      "name" : "Prueba",
+      "lastaName": "pre"
+    };
+  }
 };
