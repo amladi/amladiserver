@@ -5,10 +5,12 @@ const Login = require("./../core/security/login.js");
 router.post("/login", async function (req, res) {
   try {
     let login = new Login();
-    let result = await login.auth(req.body);
+    let result = {};
+    result.data = await login.auth(req.body);
+    result.success = true;
     res.send(result);
   } catch (e) {
-    let error = { success: false, status: false, message: e };
+    let error = { success: false, data:{}, message: e.message };
     res.send(error);
   }
 });
