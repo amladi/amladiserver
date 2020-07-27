@@ -13,6 +13,7 @@ module.exports = class dtoUser {
                   WHERE 
                  username ='${username}'`;
     try {
+      pgPool.connect()
       result = await this.dataConnection.client.query(query);
       this.dataConnection.client.end();
     } catch (ex) {
@@ -37,6 +38,24 @@ module.exports = class dtoUser {
       this.dataConnection.client.end();
     } catch (ex) {
       throw Error(`dtoUser:updateInfo=${ex.message}`);
+    }
+    return result;
+  }
+
+  async new(newUser) {
+    let result = {};
+    let query = `
+    INSERT INTO public."user"(
+      email, password, username, name, lastname, organizationurl, organizationname, organizationemail, joindate, isactive)
+      VALUES ( '${newUser.email}', '${newUser.password}', '${newUser.username}',
+              '${newUser.name}', '${newUser.lastname}', 
+              '${newUser.organizationurl}', '${newUser.organizationname}', '${newUser.organizationemail}',
+              NOW(), TRUE)`;
+    try {
+      result = await this.dataConnection.client.query(query);
+      this.dataConnection.client.end();
+    } catch (ex) {
+      throw Error(`dtoUser:NEW=${ex.message}`);
     }
     return result;
   }

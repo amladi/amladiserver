@@ -28,4 +28,25 @@ module.exports = class user {
     let dtoUser = new DtoUser();
     await dtoUser.updateInfo(newUser);
   }
+
+  async new(params) {
+    let newUser = {
+      email : params.email,
+      password : params.password,
+      name : params.name,
+      lastname : params.lastname,
+      username : params.username,
+      organizationurl : params.organizationurl,
+      organizationname : params.organizationname,
+      organizationemail : params.organizationemail
+    }
+    let dtoUser = new DtoUser();
+    await dtoUser.new(newUser);
+    let user = await dtoUser.getUserInfo(params.username);
+    if (user.rowCount === 1) {
+      return user.rows[0];
+    } else {
+      return {};
+    }
+  }
 };
