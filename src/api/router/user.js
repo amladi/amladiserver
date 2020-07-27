@@ -1,12 +1,11 @@
-// created by Esteban Hernandez at 20200721 23:23.
 const router = require("express").Router();
-const Login = require("./../core/security/login.js");
+const User = require("../core/user/profile.js");
 
-router.post("/login", async function (req, res) {
+router.post("/getProfile", async function (req, res) {
   try {
-    let login = new Login();
+    let user = new User();
     let result = {};
-    result.data = await login.auth(req.body);
+    result.data = await user.getUserInfo(req.body);
     result.success = true;
     res.send(result);
   } catch (e) {
@@ -14,5 +13,4 @@ router.post("/login", async function (req, res) {
     res.send(error);
   }
 });
-
 module.exports = router;

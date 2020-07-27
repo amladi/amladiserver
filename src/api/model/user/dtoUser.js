@@ -1,28 +1,22 @@
 const DataConnection = require("../dataConnection");
 
-module.exports = class dtoLogin {
+module.exports = class dtoUser {
   constructor() {
     this.dataConnection = new DataConnection();
   }
 
-  async returnUser(user, pass) {
+  async getUserInfo(username) {
     let result = {};
     let query = `SELECT 
-                  id, 
-                  email, 
-                  username, 
-                  name, 
-                  lastname
+                  *
                   FROM public."user"
                   WHERE 
-                  (email ='${user}' or username ='${user}')
-                  and password = '${pass}'`;
-
+                 username ='${username}'`;
     try {
       result = await this.dataConnection.client.query(query);
       this.dataConnection.client.end();
     } catch (ex) {
-      throw Error(`dtoLogin:returnUser=${ex.message}`);
+      throw Error(`dtoUser:getUserInfo=${ex.message}`);
     }
     return result;
   }
