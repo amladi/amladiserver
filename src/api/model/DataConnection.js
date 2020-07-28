@@ -19,4 +19,14 @@ module.exports = class DataConnection {
       throw Error(`Err on connect to db: ${ex.message}`);
     }
   }
+  
+  async executeQuery (text, values){
+    try {
+      let res = await this.client.query(text, values)
+      return res;
+    } catch (err) {
+      console.log(err.stack)
+      throw Error(`DataConnection:executeQuery=${err.stack}`);
+    }
+  }
 };

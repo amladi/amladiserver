@@ -49,4 +49,16 @@ module.exports = class user {
       return {};
     }
   }
+  async checkAvalible(params) {
+    let username = params.username;
+    let dtoUser = new DtoUser();
+    let result = await dtoUser.checkIfExist(username);
+    if (result.rowCount !== 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
 };

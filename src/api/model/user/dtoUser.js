@@ -13,7 +13,6 @@ module.exports = class dtoUser {
                   WHERE 
                  username ='${username}'`;
     try {
-      pgPool.connect()
       result = await this.dataConnection.client.query(query);
       this.dataConnection.client.end();
     } catch (ex) {
@@ -47,15 +46,29 @@ module.exports = class dtoUser {
     let query = `
     INSERT INTO public."user"(
       email, password, username, name, lastname, organizationurl, organizationname, organizationemail, joindate, isactive)
-      VALUES ( '${newUser.email}', '${newUser.password}', '${newUser.username}',
-              '${newUser.name}', '${newUser.lastname}', 
-              '${newUser.organizationurl}', '${newUser.organizationname}', '${newUser.organizationemail}',
-              NOW(), TRUE)`;
+      VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, NOW(), TRUE)`;
+      let values = 
+      [newUser.email, newUser.password,
+        newUser.username,newUser.name, 
+        newUser.lastname, newUser.organizationurl, 
+        newUser.organizationname, newUser.organizationemail];
     try {
-      result = await this.dataConnection.client.query(query);
-      this.dataConnection.client.end();
+      result = await this.dataConnection.executeQuery(query, values);
     } catch (ex) {
       throw Error(`dtoUser:NEW=${ex.message}`);
+    }
+    return result;
+  }
+
+
+  async checkIfExist(username) {
+    let result = {};
+    let query = `select 1 from "user" where username = $1`;
+    let values = [username];
+    try {
+      result = await this.dataConnection.executeQuery(query, values);
+    } catch (ex) {
+      throw Error(`dtoUser:checkIfExist=${ex.message}`);
     }
     return result;
   }
