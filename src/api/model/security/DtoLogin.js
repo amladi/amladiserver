@@ -15,12 +15,12 @@ module.exports = class dtoLogin {
                   lastname
                   FROM public."user"
                   WHERE 
-                  (email ='${user}' or username ='${user}')
-                  and password = '${pass}'`;
+                  (email = $1 or username = $1)
+                  and password = $2`;
+    let values = [user, pass];
 
     try {
-      result = await this.dataConnection.client.query(query);
-      this.dataConnection.client.end();
+      result = await this.dataConnection.executeQuery(query, values);
     } catch (ex) {
       throw Error(`dtoLogin:returnUser=${ex.message}`);
     }

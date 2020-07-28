@@ -1,11 +1,12 @@
 const DtoUser = require("../../model/user/dtoUser");
 module.exports = class user {
-  constructor() {}
+  constructor() {
+    this.dtoUser = new DtoUser();
+  }
 
   async getUserInfo(params) {
     let username = params.username;
-    let dtoUser = new DtoUser();
-    let user = await dtoUser.getUserInfo(username);
+    let user = await this.dtoUser.getUserInfo(username);
     if (user.rowCount === 1) {
       return user.rows[0];
     } else {
@@ -15,34 +16,37 @@ module.exports = class user {
 
   async updateProfile(params) {
     let newUser = {
-      id : params.id,
-      email : params.email,
-      password : params.password,
-      name : params.name,
-      lastname : params.lastname,
-      username : params.username,
-      organizationurl : params.organizationurl,
-      organizationname : params.organizationname,
-      organizationemail : params.organizationemail
-    }
-    let dtoUser = new DtoUser();
-    await dtoUser.updateInfo(newUser);
+      id: params.id,
+      email: params.email,
+      password: params.password,
+      name: params.name,
+      lastname: params.lastname,
+      username: params.username,
+      organizationurl: params.organizationurl,
+      organizationname: params.organizationname,
+      organizationemail: params.organizationemail,
+    };
+    await this.dtoUser.updateInfo(newUser);
   }
 
   async new(params) {
     let newUser = {
-      email : params.email,
-      password : params.password,
-      name : params.name,
-      lastname : params.lastname,
-      username : params.username,
-      organizationurl : params.organizationurl,
-      organizationname : params.organizationname,
-      organizationemail : params.organizationemail
+      email: params.email,
+      password: params.password,
+      name: params.name,
+      lastname: params.lastname,
+      username: params.username,
+      organizationurl: params.organizationurl,
+      organizationname: params.organizationname,
+      organizationemail: params.organizationemail,
+    };
+    if (!await this.checkAvalible(params)) {
+      return {
+        userAvalible: false,
+      };
     }
-    let dtoUser = new DtoUser();
-    await dtoUser.new(newUser);
-    let user = await dtoUser.getUserInfo(params.username);
+    await this.dtoUser.new(newUser);
+    let user = await this.dtoUser.getUserInfo(params.username);
     if (user.rowCount === 1) {
       return user.rows[0];
     } else {
@@ -51,14 +55,11 @@ module.exports = class user {
   }
   async checkAvalible(params) {
     let username = params.username;
-    let dtoUser = new DtoUser();
-    let result = await dtoUser.checkIfExist(username);
+    let result = await this.dtoUser.checkIfExist(username);
     if (result.rowCount !== 1) {
       return true;
     } else {
       return false;
     }
   }
-
-
 };

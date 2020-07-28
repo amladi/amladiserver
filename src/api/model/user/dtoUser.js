@@ -11,10 +11,10 @@ module.exports = class dtoUser {
                   *
                   FROM public."user"
                   WHERE 
-                 username ='${username}'`;
+                 username = $1`;
+    let values = [username];
     try {
-      result = await this.dataConnection.client.query(query);
-      this.dataConnection.client.end();
+      result = await this.dataConnection.executeQuery(query, values);
     } catch (ex) {
       throw Error(`dtoUser:getUserInfo=${ex.message}`);
     }
@@ -26,15 +26,26 @@ module.exports = class dtoUser {
     let query = `UPDATE
                   public."user" 
               SET
-                  email = '${newUser.email}' , password = '${newUser.password}' , 
-                  username ='${newUser.username}' , name ='${newUser.name}' , 
-                  lastname ='${newUser.lastname}' , organizationurl = '${newUser.organizationurl}' , 
-                  organizationname ='${newUser.organizationname}' , organizationemail ='${newUser.organizationemail}' 
+                  email = $1 , password = $2 , 
+                  username = $3 , name = $4 , 
+                  lastname = $5 , organizationurl = $6 , 
+                  organizationname = $7 , organizationemail = $8
               WHERE
-                  id = '${newUser.id}'`;
+                  id = $9`;
+
+    let values = [
+      newUser.email,
+      newUser.password,
+      newUser.username,
+      newUser.name,
+      newUser.lastname,
+      newUser.organizationurl,
+      newUser.organizationname,
+      newUser.organizationemail,
+      newUser.id
+    ];
     try {
-      result = await this.dataConnection.client.query(query);
-      this.dataConnection.client.end();
+      result = await this.dataConnection.executeQuery(query, values);
     } catch (ex) {
       throw Error(`dtoUser:updateInfo=${ex.message}`);
     }
@@ -47,11 +58,16 @@ module.exports = class dtoUser {
     INSERT INTO public."user"(
       email, password, username, name, lastname, organizationurl, organizationname, organizationemail, joindate, isactive)
       VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, NOW(), TRUE)`;
-      let values = 
-      [newUser.email, newUser.password,
-        newUser.username,newUser.name, 
-        newUser.lastname, newUser.organizationurl, 
-        newUser.organizationname, newUser.organizationemail];
+    let values = [
+      newUser.email,
+      newUser.password,
+      newUser.username,
+      newUser.name,
+      newUser.lastname,
+      newUser.organizationurl,
+      newUser.organizationname,
+      newUser.organizationemail,
+    ];
     try {
       result = await this.dataConnection.executeQuery(query, values);
     } catch (ex) {
@@ -59,7 +75,6 @@ module.exports = class dtoUser {
     }
     return result;
   }
-
 
   async checkIfExist(username) {
     let result = {};
@@ -72,5 +87,4 @@ module.exports = class dtoUser {
     }
     return result;
   }
-
 };
