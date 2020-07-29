@@ -87,4 +87,15 @@ module.exports = class dtoUser {
     }
     return result;
   }
+
+  async getSettingForgotPassword(username) {
+    let result = {};
+    let query = `SELECT id, category, datakey, value FROM public.setting where category = 'mailforgot'`;
+    try {
+      result = await this.dataConnection.executeQuery(query);
+    } catch (ex) {
+      throw Error(`dtoUser:checkIfExist=${ex.message}`);
+    }
+    return result;
+  }
 };

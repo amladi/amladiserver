@@ -53,4 +53,17 @@ router.post("/isavalible", async function (req, res) {
   }
 });
 
+router.post("/forgotpassword", async function (req, res) {
+  try {
+    let user = new User();
+    let result = {};
+    result.data = await user.forgotpassword(req.body);
+    result.success = true;
+    res.send(result);
+  } catch (e) {
+    let error = { success: false, data: {}, message: e.message };
+    res.send(error);
+  }
+});
+
 module.exports = router;

@@ -1,4 +1,6 @@
 const DtoUser = require("../../model/user/dtoUser");
+const email = require ("./../../tool/email");
+
 module.exports = class user {
   constructor() {
     this.dtoUser = new DtoUser();
@@ -40,7 +42,7 @@ module.exports = class user {
       organizationname: params.organizationname,
       organizationemail: params.organizationemail,
     };
-    if (!await this.checkAvalible(params)) {
+    if (!(await this.checkAvalible(params))) {
       return {
         userAvalible: false,
       };
@@ -61,5 +63,25 @@ module.exports = class user {
     } else {
       return false;
     }
+  }
+  async forgotpassword(params) {
+    if ((await this.checkAvalible(params))) {
+      return {
+        userAvalible: false,
+      };
+    }
+    let username = params.username;
+    let userInfo = await this.getUserInfo(params);
+    let result = await this.dtoUser.getSettingForgotPassword(username);
+    let emailSetting = {
+      from: result.rows.find((x) => x.datakey === "from").value,
+      subject: result.rows.find((x) => x.datakey === "subject").value,
+      template: result.rows.find((x) => x.datakey === "template").value,
+      userAuth: result.rows.find((x) => x.datakey === "userAuth").value,
+      passAuth: result.rows.find((x) => x.datakey === "passAuth").value,
+    };
+
+    let emailsender = new email();
+    emailsender.send(emailSetting, userInfo);
   }
 };
