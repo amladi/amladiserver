@@ -7,6 +7,6 @@
     "database": "areapxbo_devevaluates"
   },
   "node": {
-    "port": 3000
+    "port": 5555
   }
 }

@@ -10,9 +10,9 @@ let bodyParser = require("body-parser");
 let app = express();
 app.use(bodyParser.json({ limit: '5000kb' }));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/", index);
-app.use("/security", security);
-app.use("/user", user);
+app.use("devevaluatesbe/", index);
+app.use("devevaluatesbe/security", security);
+app.use("devevaluatesbe/user", user);
 app.listen(setting.node.port, function () {
   console.log(`AMLADI listening on port ${setting.node.port} 🔥`);
 });
