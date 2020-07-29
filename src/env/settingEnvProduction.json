@@ -1,0 +1,12 @@
+{
+  "db": {
+    "host": "127.0.0.1",
+    "user": "areapxbo_admin",
+    "port": 5432,
+    "password": "Amladi123",
+    "database": "areapxbo_devevaluates"
+  },
+  "node": {
+    "port": 3000
+  }
+}
