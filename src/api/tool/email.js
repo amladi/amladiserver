@@ -3,8 +3,8 @@ var nodemailer = require("nodemailer");
 module.exports = class email {
   async send(setting, userInfo) {
     var transporter = nodemailer.createTransport({
-      host : 'smtp.mailtrap.io',
-      port: 2525,
+      host : setting.host,
+      port : setting.port,
       auth: {
         user: setting.userAuth,
         pass: setting.passAuth,

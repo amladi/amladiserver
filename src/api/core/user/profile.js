@@ -79,6 +79,8 @@ module.exports = class user {
       template: result.rows.find((x) => x.datakey === "template").value,
       userAuth: result.rows.find((x) => x.datakey === "userAuth").value,
       passAuth: result.rows.find((x) => x.datakey === "passAuth").value,
+      host: result.rows.find((x) => x.datakey === "host").value,
+      port: result.rows.find((x) => x.datakey === "port").value,
     };
 
     let emailsender = new email();
