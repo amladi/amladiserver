@@ -86,4 +86,16 @@ module.exports = class user {
     let emailsender = new email();
     emailsender.send(emailSetting, userInfo);
   }
+
+  async testTable (){
+    await this.dtoUser.createTableTemp ();
+    await this.dtoUser.insertData();
+    let result = await this.dtoUser.selectTableTemp();
+    this.dtoUser.deleteTableTemp();
+    if (result.rowCount === 1) {
+      return result.rows[0];
+    } else {
+      return {};
+    }
+  }
 };

@@ -13,7 +13,7 @@ module.exports = class dtoLogin {
                   username, 
                   name, 
                   lastname
-                  FROM public."user"
+                  FROM public.userp
                   WHERE 
                   (email = $1 or username = $1)
                   and password = $2`;

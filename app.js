@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/devevaluatesbe/", index);
 app.use("/devevaluatesbe/security", security);
 app.use("/devevaluatesbe/user", user);
-app.listen(80, function () {
+app.listen(setting.node.port, function () {
   console.log(`AMLADI listening on port ${setting.node.port} 🔥`);
 });
 module.exports = app;
