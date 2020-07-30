@@ -13,7 +13,7 @@ let app = express();
 app.use("devevaluatesbe/", index);
 app.use("devevaluatesbe/security", security);
 app.use("devevaluatesbe/user", user);
-app.listen(setting.node.port, function () {
+app.listen(80, function () {
   // console.log(`AMLADI listening on port ${setting.node.port} 🔥`);
 });
 module.exports = app;
