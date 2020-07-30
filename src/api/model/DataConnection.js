@@ -4,7 +4,7 @@ const { Client } = require("pg");
 module.exports = class DataConnection {
   constructor() {
     let env = configEnv.db;
-    let database = configEnv.database;
+    let database = env.database;
     let _client = new Client({
       user: env.user,
       host: env.host,
