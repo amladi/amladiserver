@@ -2,6 +2,7 @@ const DtoUser = require("../../model/user/dtoUser");
 const email = require("./../../tool/email");
 
 module.exports = class user {
+
   constructor() {
     this.dtoUser = new DtoUser();
   }
@@ -9,7 +10,7 @@ module.exports = class user {
   async getUserInfo(params) {
     let username = params.username;
     let user = await this.dtoUser.getUserInfo(username);
-    if (user.rows.lenght === 1) {
+    if (user.rows.length === 1) {
       return user.rows[0];
     } else {
       return {};
@@ -42,6 +43,7 @@ module.exports = class user {
       organizationname: params.organizationname,
       organizationemail: params.organizationemail,
     };
+    // check if the user is avalible, if not then end process.
     if (!(await this.checkAvalible(params))) {
       return {
         userAvalible: false,
@@ -49,20 +51,25 @@ module.exports = class user {
     }
     await this.dtoUser.new(newUser);
     let user = await this.dtoUser.getUserInfo(params.username);
-    if (user.rows.lenght === 1) {
+    if (user.rows.length === 1) {
       return user.rows[0];
     } else {
       return {};
     }
   }
+
+  /**
+   * check if the username was added yet on db
+   * @param {body} params 
+   */
   async checkAvalible(params) {
     let username = params.username;
     let result = await this.dtoUser.checkIfExist(username);
-    //si es 0 entonces no existe y devuelve true porque esta avalible.
-    return (result.rows.lenght === 0) ;
+    return result.rows.length === 0;
   }
+
   async forgotpassword(params) {
-    if (await this.checkAvalible(params)) {
+    if ((await this.checkAvalible(params))) {
       return {
         userAvalible: false,
       };
@@ -89,7 +96,7 @@ module.exports = class user {
     await this.dtoUser.insertData();
     let result = await this.dtoUser.selectTableTemp();
     this.dtoUser.deleteTableTemp();
-    if (result.rows.lenght === 1) {
+    if (result.rows.length === 1) {
       return result.rows[0];
     } else {
       return {};

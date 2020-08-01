@@ -1,4 +1,4 @@
-const DtoLogin = require("../../model/security/dto_Login");
+const DtoLogin = require("../../model/security/dtoLogin");
 module.exports = class Login {
   constructor() {}
 

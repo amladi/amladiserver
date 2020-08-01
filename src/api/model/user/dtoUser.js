@@ -1,4 +1,4 @@
-const DataConnection = require("../data_Connection");
+const DataConnection = require("../dataConnection");
 
 module.exports = class dtoUser {
   constructor() {
