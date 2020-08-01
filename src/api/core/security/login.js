@@ -7,7 +7,7 @@ module.exports = class Login {
     let password = params.password;
     let dtoLogin = new DtoLogin();
     let user = await dtoLogin.returnUser(username, password);
-    if (user.rows.lenght === 1 ){
+    if (user.rows.length === 1 ){
       return user.rows[0];
     }else {
       return {}
