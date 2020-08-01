@@ -1,4 +1,4 @@
-const DataConnection = require("../dataConnection");
+const DataConnection = require("../data_Connection");
 
 module.exports = class dtoUser {
   constructor() {
@@ -20,6 +20,18 @@ module.exports = class dtoUser {
     }
     return result;
   }
+
+  async getUsers(username) {
+    let result = {};
+    let query = `SELECT  email, password, username, name, lastname, organizationurl, organizationname, organizationemail, joindate, isactive FROM public.userp`;
+    try {
+      result = await this.dataConnection.executeQuery(query);
+    } catch (ex) {
+      throw Error(`dtoUser:getUserInfo=${ex.message}`);
+    }
+    return result;
+  }
+
 
   async updateInfo(newUser) {
     let result = {};

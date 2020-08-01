@@ -1,5 +1,5 @@
 const DtoUser = require("../../model/user/dtoUser");
-const email = require ("./../../tool/email");
+const email = require("./../../tool/email");
 
 module.exports = class user {
   constructor() {
@@ -9,7 +9,7 @@ module.exports = class user {
   async getUserInfo(params) {
     let username = params.username;
     let user = await this.dtoUser.getUserInfo(username);
-    if (user.rowCount === 1) {
+    if (user.rows.lenght === 1) {
       return user.rows[0];
     } else {
       return {};
@@ -49,7 +49,7 @@ module.exports = class user {
     }
     await this.dtoUser.new(newUser);
     let user = await this.dtoUser.getUserInfo(params.username);
-    if (user.rowCount === 1) {
+    if (user.rows.lenght === 1) {
       return user.rows[0];
     } else {
       return {};
@@ -58,14 +58,11 @@ module.exports = class user {
   async checkAvalible(params) {
     let username = params.username;
     let result = await this.dtoUser.checkIfExist(username);
-    if (result.rowCount !== 1) {
-      return true;
-    } else {
-      return false;
-    }
+    //si es 0 entonces no existe y devuelve true porque esta avalible.
+    return (result.rows.lenght === 0) ;
   }
   async forgotpassword(params) {
-    if ((await this.checkAvalible(params))) {
+    if (await this.checkAvalible(params)) {
       return {
         userAvalible: false,
       };
@@ -87,15 +84,19 @@ module.exports = class user {
     emailsender.send(emailSetting, userInfo);
   }
 
-  async testTable (){
-    await this.dtoUser.createTableTemp ();
+  async testTable() {
+    await this.dtoUser.createTableTemp();
     await this.dtoUser.insertData();
     let result = await this.dtoUser.selectTableTemp();
     this.dtoUser.deleteTableTemp();
-    if (result.rowCount === 1) {
+    if (result.rows.lenght === 1) {
       return result.rows[0];
     } else {
       return {};
     }
+  }
+
+  async getAllUsers() {
+    return this.dtoUser.getUsers();
   }
 };
